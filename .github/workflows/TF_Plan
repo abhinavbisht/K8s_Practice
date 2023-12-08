@@ -1,0 +1,19 @@
+name: Terraform Plan
+
+on:
+  workflow_dispatch
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    name: Create Terraform plan
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: terraform plan
+        uses: dflook/terraform-plan@v1
+        with:
+          path: ./infrastructure/dev
