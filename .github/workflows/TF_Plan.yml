@@ -4,9 +4,12 @@ on:
   workflow_dispatch
 
 jobs:
-  plan:
+  terraform_plan:
     runs-on: ubuntu-latest
-    name: Create Terraform plan
+    name: Terraform plan
+    defaults:
+        run:
+          working-directory: ${{ github.workspace }}/infrastructure/environments/dev
     steps:
       - name: Checkout
         uses: actions/checkout@v3
