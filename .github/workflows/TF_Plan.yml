@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Terraform plan
     defaults:
-        run:
-          working-directory: ${{ github.workspace }}/infrastructure/environments/dev
+      run:
+        working-directory: ${{ github.workspace }}/infrastructure/environments/dev/service_dev
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -36,4 +36,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: practice_plan
-          path: ${{ github.workspace }}/infrastructure/environments/dev/plan.out
+          path: ${{ github.workspace }}/infrastructure/environments/dev/service_dev/plan.out
