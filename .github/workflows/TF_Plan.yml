@@ -17,14 +17,20 @@ jobs:
         uses: azure/login@v1
         with:
           creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET  }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID  }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
-          enable-AzPSSession: true 
 
       - name: terraform init
         uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ~1.0
+          terraform_wrapper: false
 
-      - name: Terraform Init
-        run: terraform init
-  
       # Generates an execution plan for Terraform
-      - name: Terraform Plan
-        run: terraform plan -input=false
+      - name: terraform plan
+        run: | 
+          terraform init 
+          terraform plan -out plan.out
+      - name: upload terraform plan
+        uses: actions/upload-artifact@v2
+        with:
+          name: practice_plan
+          path: ${{ github.workspace }}/infrastructure/environments/dev/plan.out
